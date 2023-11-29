@@ -9,7 +9,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Title -->
-    <title>Penyedia Benih Sumber - Balittas</title>
+    <title>Penyedia Benih Sumber - BSIP-TAS</title>
 
     <!-- Favicon -->
     <link rel="icon" href="{{url('assets/admin/img/logo/icon.png')}}">
@@ -132,7 +132,7 @@
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
         <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center" style="background-image: url(/assets/frontend/img/bg-img/24.jpg);">
-            <h2>Penyedia Benih Sumber | Balittas</h2>
+            <h2>Penyedia Benih Sumber | BSIP-TAS</h2>
         </div>
 
         <div class="container">
@@ -165,11 +165,8 @@
                             <div class="footer-logo mb-30">
                                 <a href="#"><img src="{{url('assets/admin/img/logo/logo.png')}}" alt=""></a>
                             </div>
-                            <p>Balai Penelitian Tanaman Pemanis dan Serat (Balittas) merupakan salah satu unit pelaksana
-                                teknis (UPT) Badan Penelitian dan Pengembangan Pertanian, yang bertanggung jawab
-                                langsung kepada Pusat Penelitian dan Pengembangan Perkebunan di Bogor. Balittas
-                                berkedudukan di Karangploso, Malang, Jawa Timur, mempunyai kegiatan penelitian tanaman
-                                pemanis, serat, tembakau, dan minyak industri.</p>
+                            <p>Balai Pengujian Standar Instrumen Tanaman Pemanis dan Serat (BSIP-TAS) merupakan salah satu unit pelaksana
+                                teknis (UPT) Badan Badan Standardisasi Instrumen Pertanian (BSIP), yang melaksanakan pengujian standar instrumen tanaman pemanis, serat, tembakau dan minyak industri</p>
 
                         </div>
                     </div>
@@ -235,13 +232,13 @@
                                 <p><span>Alamat:</span> Jalan Raya Karangploso Km 4 , Kotak Pos 199, Kabupaten Malang
                                     Jawa Timur, Indonesia</p>
                                 <p><span>Phone:</span> (0341) 491447 / (0341) 485121</p>
-                                <p><span>Email:</span> balittas@litbang.pertanian.go.id / balittas.malang@gmail.com </p>
+                                <p><span>Email:</span> bsip.tanamanpemanis@pertanian.go.id </p>
                             </div><br>
                             <div class="social-info">
-                                <a href="https://www.facebook.com/balittas.malang"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="https://www.facebook.com/bsip.pemanis"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                                 <a href="https://twitter.com/BalittasMalang"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                <a href="https://www.youtube.com/channel/UCiYhtpYmb_SWaIJMarhejag/featured"><i class="fa fa-youtube" aria-hidden="true"></i></a>
-                                <a href="https://www.instagram.com/balittas_malang/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                <a href="https://www.youtube.com/@bsip.pemanis"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                                <a href="https://www.instagram.com/bsip.pemanis/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                             </div>
                         </div>
                     </div>
@@ -264,7 +261,7 @@
                                 Copyright &copy; <script>
                                     document.write(new Date().getFullYear());
 
-                                </script> Balittas All rights reserved </a>
+                                </script> BSIP-TAS All rights reserved </a>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </p>
                         </div>

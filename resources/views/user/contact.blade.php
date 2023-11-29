@@ -40,14 +40,14 @@
                 <!-- Section Heading -->
                 <div class="section-heading">
                     <h2>CONTACT US</h2>
-                    <p>Balai Penelitian Tanaman Pemanis dan Serat (Balittas).</p>
+                    <p>Balai Pengujian Standar Instrumen Tanaman Pemanis dan Serat (BSIP-TAS).</p>
                 </div>
                 <!-- Contact Information -->
                 <div class="contact-information">
                     <p><span>Alamat:</span> Jalan Raya Karangploso Km 4 , Kotak Pos 199, Kabupaten Malang
                         Jawa Timur, Indonesia</p>
                     <p><span>Phone:</span> (0341) 491447 / (0341) 485121</p>
-                    <p><span>Email:</span> balittas@litbang.pertanian.go.id / balittas.malang@gmail.com </p>
+                    <p><span>Email:</span> bsip.tanamanpemanis@pertanian.go.id </p>
                 </div><br>
             </div>
         </div>
@@ -100,7 +100,7 @@
             <div class="col-12 col-lg-12">
                 <!-- Google Maps -->
                 <div class="map-area mb-100">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1975.9315533501142!2d112.62135084988667!3d-7.909366132889837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7881e8795c6f71%3A0xceec556ddda3e8c0!2sBalai%20Penelitian%20Tanaman%20Pemanis%20dan%20Serat%20(Balittas)!5e0!3m2!1sid!2sid!4v1641962207196!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15807.444428660874!2d112.6227342!3d-7.9095748!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7881e8795c6f71%3A0xceec556ddda3e8c0!2sBSIP%20TAS!5e0!3m2!1sid!2sid!4v1701247665123!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>

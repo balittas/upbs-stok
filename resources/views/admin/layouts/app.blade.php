@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Data Management | Bibit Balittas</title>
+    <title>Data Management | Bibit BSIP-TAS</title>
     <link rel="icon" href="{{url('assets/admin/img/logo/icon.png')}}">
     <meta name="description" content="">
     <meta name="keywords" content="">
