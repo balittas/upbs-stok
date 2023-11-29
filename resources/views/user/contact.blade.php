@@ -54,7 +54,7 @@
     </div>
 </div>
 <!-- ##### Contact Area Info End ##### -->
-
+<!-- kita sadar ingin bersama -->
 <!-- ##### Contact Area Start ##### -->
 <section class="contact-area">
     <div class="container">
