@@ -1,0 +1,343 @@
+@extends('user.layouts.app')
+
+@section('content')
+
+<!-- ##### Breadcrumb Area Start ##### -->
+{{-- <div class="breadcrumb-area">
+    <!-- Top Breadcrumb Area -->
+    <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
+        style="background-image: url('assets/frontend/img/bg-img/24.jpg;);">
+        <h2>Detail Produk</h2>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Detail Produk</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div> --}}
+<!-- ##### Breadcrumb Area End ##### -->
+
+<!-- ##### Single Product Details Area Start ##### -->
+<div class="checkout_area mb-100">
+    <div class="container">
+        {{-- <form id="fileUploadForm" action="{{route('checkout.store')}}" method="POST" enctype="multipart/form-data"> --}}
+        <form action="{{route('checkout.store')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="row justify-content-between">
+                <div class="col-12 col-lg-7">
+                    <div class="checkout_details_area clearfix">
+                        <h5>RINCIHAN PENAGIHAN</h5>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-4">
+                                <label for="nama_penerima">Nama Penerima *</label>
+                                <input type="text" class="form-control" name="nama_penerima" id="nama_penerima" value="" >
+                            </div>
+                            <div class="col-12 mb-4">
+                                <label for="no_hp">No HP *</label>
+                                <input type="number" name="no_hp" class="form-control" id="phone_number" min="0" value="">
+                            </div>
+                            <div class="col-12 mb-4">
+                                <label for="alamat">Alamat *</label>
+                                <input type="text" class="form-control" name="alamat" id="alamat" value="" >
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="zip_code">Zip Code</label>
+                                <input type="number" class="form-control" id="zip_code" name="zip_code" value="" min="0">
+                            </div>
+                            <div class="col-12 mb-4">
+                                <label>Provinsi</label>
+                                <select class="form-control provinsi-tujuan" name="province_destination">
+                                    <option value="0">Pilih Provinsi</option>
+                                    @foreach ($provinces as $province => $value)
+                                    <option value="{{ $province  }}">{{ $value }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <label>Kota / Kabupaten</label>
+                                <select class="form-control kota-tujuan" name="city_destination">
+                                    <option value="">Pilih Kota</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <label>Peta Lokasi Alamat</label>
+                                <div id='map' style='width: 640px; height: 290px;'></div>
+                                <input type="hidden" name="coordinate_map" id="coordinate_map">
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <label for="order_notes">Order Catatan</label>
+                                <textarea class="form-control" id="order_notes" name="order_notes" cols="30" rows="10" placeholder="Catatan pengiriman"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    <div class="checkout-content">
+                        <h5 class="title--">Produk</h5>
+                        @foreach ($cart as $item)
+                        <div class="subtotal d-flex justify-content-between align-items-center">
+                            <small>{{$item->name}} <br> <b>Harga : Rp. {{number_format($item->price, 2)}} /
+                                    {{$item->unit}}</b> x <b>({{$item->qty}} {{$item->unit}})</b></small>
+                            <b>Rp. {{$item->unit == 'gram' ? number_format($item->price * $item->qty, 2) : number_format($item->price * $item->qty / 1000, 2)}}</b>
+                        </div>
+                        @endforeach
+                        <br>
+                        <h5 class="title--">Pesanan</h5>
+                        <div class="subtotal d-flex justify-content-between align-items-center">
+                            <h5>Total Produk</h5>
+                            <h5>Rp. {{number_format($sub_total, 2)}}</h5>
+                            <input type="hidden" name="sub_total" value="{{$sub_total}}">
+                        </div>
+                        <div class="shipping d-flex justify-content-between align-items-center">
+                            <h5>Total Ongkos Kirim</h5>
+                            <h5>Rp. {{number_format($ongkir, 2)}}</h5>
+                            <input type="hidden" name="ongkir" value="{{$ongkir}}">
+                        </div>
+                        <div class="order-total d-flex justify-content-between align-items-center">
+                            <h5>Order Total</h5>
+                            <h5>Rp. {{number_format($total, 2)}}</h5>
+                            <input type="hidden" name="paid_total" value="{{$total}}">
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <b style="color:red">* Catatan : Transfer Total Produk dan Total Ongkir</b>
+                        </div><br>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <b>Lakukan transfer Total Produk dengan jumlah Rp. {{number_format($sub_total, 2)}} ke rekening
+                                0000000 (BANK) a.n Nama</b>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <img id="output_produk" width="100%" />
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p>Bukti Transfer Total Produk</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <input accept="image/*" onchange="loadFileProduk(event)" id="total_produk" type="file" class="form-control" name="bukti_transfer_produk" >
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <b>Lakukan transfer Total Produk dengan jumlah Rp. {{number_format($ongkir, 2)}} ke rekening
+                                0000000 (BANK) a.n Nama</b>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <img id="output_ongkir" width="100%" />
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p>Bukti Transfer Total Ongkir</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <input accept="image/*" onchange="loadFileOngkir(event)" id="total_ongkir" type="file" class="form-control" name="bukti_transfer_ongkir" >
+                        </div><br>
+                        <div class="form-group">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="checkout-btn mt-30">
+                            <button type="submit" class="btn alazea-btn w-100">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
+<!-- ##### Single Product Details Area End ##### -->
+
+@section('footer')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
+<script>
+    var loadFileProduk = function (event) {
+        var output = document.getElementById('output_produk');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src)
+        }
+    };
+
+    var loadFileOngkir = function (event) {
+        var output = document.getElementById('output_ongkir');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src)
+        }
+    };
+
+</script>
+
+
+<script>
+    var SITEURL = "{{URL('/')}}";
+    let validExt = ['jpg', 'png', 'jpeg'];
+
+    function resetForm($form) {
+        $form.find('input:file').val('');
+    }
+    $('input').on('change', function () {
+        var extension = this.files[0].type.split('/')[1]
+        console.log(this.files[0].type)
+        if (validExt.indexOf(extension) == -1) {
+            resetToastPosition();
+            $.toast({
+                heading: 'Gagal',
+                text: 'Bukti transfer yang diupload harus berupa jpg/png/jpeg',
+                showHideTransition: 'slide',
+                icon: 'error',
+                loaderBg: '#f2a654',
+                position: 'bottom-left'
+            });
+            $('#total_produk').val('');
+            $('#total_ongkir').val('');
+        }
+    });
+
+    $(function () {
+        uploadSuccess = function () {
+            'use strict';
+            resetToastPosition();
+            $.toast({
+                heading: 'Success',
+                text: 'Produk berhasil dibeli. Silahkan tunggu produk akan diproses oleh admin',
+                showHideTransition: 'slide',
+                icon: 'success',
+                loaderBg: '#f96868',
+                position: 'bottom-left'
+            })
+
+        };
+        $(document).ready(function () {
+            $('#fileUploadForm').ajaxForm({
+                beforeSend: function () {
+                    var percentage = '0';
+                },
+                uploadProgress: function (event, position, total, percentComplete) {
+                    var percentage = percentComplete;
+                    $('.progress .progress-bar').css("width", percentage + '%',
+                        function () {
+                            return $(this).attr("aria-valuenow", percentage) + "%";
+                        });
+                },
+                complete: function (xhr) {
+                    var percentage = '0';
+                    uploadSuccess();
+                    setTimeout(function () {
+                        window.location.href = SITEURL + "/";
+                    }, 3000);
+                }
+            });
+
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('select[name="province_destination"]').on('change', function () {
+            let provindeId = $(this).val();
+            if (provindeId) {
+                jQuery.ajax({
+                    url: '/cities/' + provindeId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (response) {
+                        $('select[name="city_destination"]').empty();
+                        $('select[name="city_destination"]').append(
+                            '<option value="">Pilih Kota</option>');
+                        $.each(response, function (key, value) {
+                            $('select[name="city_destination"]').append(
+                                '<option value="' + key + '">' + value +
+                                '</option>');
+                        });
+                    },
+                });
+            } else {
+                $('select[name="city_destination"]').append(
+                    '<option value="">-- pilih kota tujuan --</option>');
+            }
+        });
+    });
+
+</script>
+<script>
+    function initMap() {
+        const myLatlng = {
+            lat: -4.939518665548637,
+            lng: 117.79896800435768
+        };
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 15,
+            center: myLatlng,
+        });
+        // Create the initial InfoWindow.
+        let infoWindow = new google.maps.InfoWindow({
+            content: "Click the map to get Lat/Lng!",
+            position: myLatlng,
+        });
+        const locationButton = document.createElement("div");
+        locationButton.textContent = "Klik untuk mendapatkan Lokasi";
+        locationButton.classList.add("custom-map-control-button");
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+        locationButton.addEventListener("click", () => {
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+
+                        infoWindow.setPosition(pos);
+                        infoWindow.setContent("Location found.");
+                        infoWindow.open(map);
+                        map.setCenter(pos);
+                    },
+                    () => {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    }
+                );
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        });
+
+        infoWindow.open(map);
+        // Configure the click listener.
+        map.addListener("click", (mapsMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
+            // Create a new InfoWindow.
+            infoWindow = new google.maps.InfoWindow({
+                position: mapsMouseEvent.latLng,
+            });
+            infoWindow.setContent(
+                JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+            );
+            infoWindow.open(map);
+            const json = JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+            const result = JSON.parse(json);
+            $('#coordinate_map').val([result["lat"], result["lng"]])
+        });
+    }
+
+</script>
+@endsection

@@ -1,0 +1,146 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\DetailProduct;
+use App\Models\Product;
+use App\Models\User;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use \Yajra\Datatables\Datatables;
+
+class CartController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('carts')
+                ->leftJoin('users', 'carts.user_id', '=', 'users.id')
+                ->leftJoin('detail_products', 'carts.detail_product_id', '=', 'detail_products.id')
+                ->leftJoin('products', 'detail_products.product_id', '=', 'products.id')
+                ->leftJoin('transactions', 'carts.transaction_id', '=', 'transactions.id')
+                ->select(['carts.id', 'users.name as user_name', 'products.name as product_name', 'transactions.id as transaction_id', 'carts.status', 'carts.qty']);
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    $btn = '<td class="dropdown"><div class="ik ik-more-vertical dropdown-toggle" data-toggle="dropdown"></div><ul class="dropdown-menu" role="menu"><a class="dropdown-item" href="' . url('admin-page/cart/' . $data->id . '/edit') . '"><li> <i class="ik ik-edit" style="color: green;font-size:16px;padding-right:5px"></i><span style="font-size:14px"> Edit</span></li></a><a class="dropdown-item delete" href="#" data-toggle="modal"
+                    data-target="#exampleModal" data-id=' . $data->id . '><li><i class="ik ik-trash-2" style="color: red;font-size:16px;padding-right:5px"></i><span style="font-size:14px"> Hapus</span></li></a></ul></td>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('admin.cart.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $detail_products = DB::table('detail_products')
+            ->join('products', 'products.id', '=', 'detail_products.product_id')
+            ->select(['detail_products.id', 'products.name AS product_name'])
+            ->get();
+        $users = User::all();
+        $transactions = Transaction::all();
+        return view('admin.cart.add', compact('detail_products', 'users', 'transactions'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $table = new Cart();
+        $table->id = Str::random(16) . Carbon::now()->format('YmdHis');
+        $table->detail_product_id = $request->detail_product_id;
+        $table->user_id = $request->user_id;
+        $table->transaction_id = $request->transaction_id;
+        $table->status = $request->status;
+        $table->qty = $request->qty;
+
+        $table->save();
+        return redirect()->route('cart.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $detail_products = DB::table('detail_products')
+            ->join('products', 'products.id', '=', 'detail_products.product_id')
+            ->select(['detail_products.id', 'products.name AS product_name'])
+            ->get();
+        $users = User::all();
+        $transactions = Transaction::all();
+        $data = Cart::find($id);
+        return view('admin.cart.edit', compact('data', 'detail_products', 'users', 'transactions'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $table = Cart::find($id);
+
+        $table->detail_product_id = $request->detail_product_id;
+        $table->user_id = $request->user_id;
+        $table->transaction_id = $request->transaction_id;
+        $table->status = $request->status;
+        $table->qty = $request->qty;
+
+        $table->save();
+
+        return redirect()->route('cart.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        $table = Cart::find($request->id);
+        $table->delete();
+        return redirect()->route('cart.index');
+    }
+}
